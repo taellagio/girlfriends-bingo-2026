@@ -435,9 +435,9 @@
                 <h3>🎉 Your Bingo Card is Ready!</h3>
                 <p>Your personalized 2026 bingo card has been generated. Here's how to save and share it:</p>
                 <ol>
-                    <li><strong>Print It:</strong> Click the "Print Card" button below to get a physical copy.</li>
-                    <li><strong>Share the Link:</strong> The URL in your browser contains your card - copy and share it with friends!</li>
-                    <li><strong>Track Progress:</strong> Throughout 2026, mark off squares as you complete each goal or activity.</li>
+                    <li><strong>Save or Print:</strong> Click the buttons below to save or print your card.</li>
+                    <li><strong>Share:</strong> Share your bingo card with your friends!</li>
+                    <li><strong>Track Progress:</strong> Mark off squares as you complete each goal or activity.</li>
                 </ol>
             </div>
 
@@ -446,6 +446,7 @@
             <div class="card-actions">
                 <button onclick="window.location.href='index.html'">Create New Card</button>
                 <button onclick="window.location.href='#share-section'">Share Your Card</button>
+                <button onclick="saveCard()">Save Card</button>
                 <button onclick="printCard()">Print Card</button>
             </div>
         </div>
@@ -505,6 +506,38 @@
             } else {
                 window.location.href = 'index.html';
             }
+        }
+
+        function saveCard() {
+            // Use html2canvas library to save the card as an image
+            const cardElement = document.querySelector('.bingo-card');
+            if (!cardElement) {
+                alert('Please wait for the card to load before saving.');
+                return;
+            }
+            
+            // Import html2canvas dynamically
+            if (typeof html2canvas === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                script.onload = () => saveCardAsImage();
+                document.head.appendChild(script);
+            } else {
+                saveCardAsImage();
+            }
+        }
+
+        function saveCardAsImage() {
+            const cardElement = document.querySelector('.bingo-card');
+            html2canvas(cardElement, {
+                scale: 2,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = '2026-bingo-card.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
 
         function printCard() {
