@@ -454,13 +454,23 @@
                     <li><strong>Share:</strong> Share your bingo card with your friends!</li>
                     <li><strong>Track Progress:</strong> Mark off squares as you complete each goal or activity.</li>
                 </ol>
+                
+                <!-- Share link section (hidden by default, shown when Share button clicked) -->
+                <div id="share-link-section" style="display: none; margin-top: 30px; padding: 20px; background: white; border-radius: 8px; border: 1px solid #e5e5e5;">
+                    <p style="font-weight: 600; margin-bottom: 15px; color: #1a1a1a;">Share your card using this link:</p>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <input type="text" id="share-url-input" readonly style="flex: 1; min-width: 200px; padding: 12px; border: 2px solid #e5e5e5; border-radius: 6px; font-family: monospace; font-size: 13px; background: #fafafa;">
+                        <button onclick="copyShareLink()" style="padding: 12px 24px; background: #e63946; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap;">Copy Link</button>
+                    </div>
+                    <p style="margin: 0; color: #4a4a4a;">Or <a href="#" onclick="shareViaEmail(); return false;" style="color: #e63946; text-decoration: underline; font-weight: 500;">click here to share via email</a></p>
+                </div>
             </div>
 
             <div id="cardsContainer"></div>
 
             <div class="card-actions">
                 <button onclick="regenerateCard()">Regenerate Card</button>
-                <button onclick="window.location.href='#share-section'">Share Your Card</button>
+                <button onclick="showShareSection()">Share Your Card</button>
                 <button onclick="saveCard()">Save Card</button>
             </div>
         </div>
@@ -548,6 +558,46 @@
             
             // Scroll to top of card
             container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showShareSection() {
+            // Populate the share URL input
+            const shareUrlInput = document.getElementById('share-url-input');
+            shareUrlInput.value = window.location.href;
+            
+            // Show the share link section
+            const shareSection = document.getElementById('share-link-section');
+            shareSection.style.display = 'block';
+            
+            // Scroll to the share section
+            document.getElementById('share-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyShareLink() {
+            const shareUrlInput = document.getElementById('share-url-input');
+            shareUrlInput.select();
+            shareUrlInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            navigator.clipboard.writeText(shareUrlInput.value).then(() => {
+                // Change button text temporarily
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '#e63946';
+                }, 2000);
+            }).catch(err => {
+                alert('Failed to copy link. Please copy it manually.');
+            });
+        }
+
+        function shareViaEmail() {
+            const subject = encodeURIComponent('Check out my 2026 Bingo Card!');
+            const body = encodeURIComponent('I created a custom 2026 bingo card! Check it out here: ' + window.location.href);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
         function saveCard() {
