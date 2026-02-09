@@ -461,6 +461,16 @@
             const card = document.createElement('div');
             card.className = 'bingo-card';
             
+            // Add banner header to the card
+            const header = document.createElement('div');
+            header.className = 'card-header';
+            const bannerImg = document.createElement('img');
+            bannerImg.src = bannerDataURL;
+            bannerImg.alt = '2026 Bingo Card - Girlfriends Edition';
+            bannerImg.className = 'banner-image';
+            header.appendChild(bannerImg);
+            card.appendChild(header);
+            
             const grid = document.createElement('div');
             grid.className = 'bingo-grid';
             
