@@ -25,10 +25,11 @@
             background: white;
             padding: 30px 20px 0 20px;
             text-align: left;
+            overflow: hidden;
         }
 
         .hero .banner-image {
-            width: 100%;
+            width: auto;
             max-width: 450px;
             height: auto;
             margin: 0;
@@ -213,7 +214,7 @@
 
         .bingo-card {
             background: white;
-            padding: 60px;
+            padding: 40px 40px;
             border: 1px solid #e5e5e5;
             page-break-inside: avoid;
         }
@@ -291,26 +292,43 @@
 
             .bingo-card {
                 page-break-inside: avoid;
-                margin-bottom: 80px;
+                margin-bottom: 0;
+                padding: 30px 30px;
                 border: none;
+            }
+
+            .card-header {
+                margin-bottom: 10px;
+            }
+
+            .card-header .banner-image {
+                max-width: 350px;
             }
 
             .cards-container {
                 gap: 0;
+            }
+
+            @page {
+                margin: 0.5in;
             }
         }
 
         @media (max-width: 900px) {
             .hero {
                 padding: 20px;
+                overflow: hidden;
             }
 
             .hero .banner-image {
-                width: 100%;
+                width: 90%;
+                max-width: 100%;
+                margin-left: 0;
             }
 
             .container {
-                padding: 40px 20px;
+                padding: 0 20px 40px 20px;
+                margin-top: -30px;
             }
 
             .section {
