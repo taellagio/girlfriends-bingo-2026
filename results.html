@@ -561,9 +561,14 @@
         }
 
         function showShareSection() {
+            // Create share URL pointing to shared.html
+            const params = new URLSearchParams(window.location.search);
+            const baseUrl = window.location.origin + window.location.pathname.replace('results.html', 'shared.html');
+            const shareUrl = baseUrl + '?' + params.toString();
+            
             // Populate the share URL input
             const shareUrlInput = document.getElementById('share-url-input');
-            shareUrlInput.value = window.location.href;
+            shareUrlInput.value = shareUrl;
             
             // Show the share link section
             const shareSection = document.getElementById('share-link-section');
@@ -595,8 +600,13 @@
         }
 
         function shareViaEmail() {
+            // Create share URL pointing to shared.html
+            const params = new URLSearchParams(window.location.search);
+            const baseUrl = window.location.origin + window.location.pathname.replace('results.html', 'shared.html');
+            const shareUrl = baseUrl + '?' + params.toString();
+            
             const subject = encodeURIComponent('Check out my 2026 Bingo Card!');
-            const body = encodeURIComponent('I created a custom 2026 bingo card! Check it out here: ' + window.location.href);
+            const body = encodeURIComponent('I created a custom 2026 bingo card! Check it out here: ' + shareUrl);
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
