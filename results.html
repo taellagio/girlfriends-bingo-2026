@@ -378,16 +378,16 @@
             }
 
             .container {
-                padding: 0 20px 40px 20px;
+                padding: 0 10px 40px 10px;
                 margin-top: -30px;
             }
 
             .section {
-                padding: 30px 20px;
+                padding: 20px 10px;
             }
 
             .directions {
-                padding: 25px 20px;
+                padding: 20px 15px;
             }
 
             .cards-container {
@@ -395,16 +395,30 @@
             }
 
             .bingo-card {
-                padding: 30px 20px;
+                padding: 15px 10px;
+                max-width: 100%;
+            }
+
+            .card-header {
+                margin-bottom: 15px;
             }
 
             .card-header .banner-image {
                 width: 100%;
+                max-width: 100%;
+            }
+
+            .bingo-grid {
+                width: 100%;
+                aspect-ratio: 1;
             }
 
             .bingo-cell {
-                font-size: 12px;
-                padding: 8px;
+                font-size: 10px;
+                padding: 4px;
+                line-height: 1.2;
+                min-height: 0;
+                aspect-ratio: 1;
             }
 
             .controls {
@@ -413,12 +427,13 @@
 
             .card-actions {
                 gap: 8px;
+                flex-direction: column;
             }
 
             .card-actions button {
-                padding: 8px 16px !important;
-                font-size: 12px !important;
-                width: auto !important;
+                padding: 12px 20px !important;
+                font-size: 14px !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -444,7 +459,7 @@
             <div id="cardsContainer"></div>
 
             <div class="card-actions">
-                <button onclick="window.location.href='index.html'">Create New Card</button>
+                <button onclick="regenerateCard()">Regenerate Card</button>
                 <button onclick="window.location.href='#share-section'">Share Your Card</button>
                 <button onclick="saveCard()">Save Card</button>
             </div>
@@ -515,6 +530,24 @@
             } else {
                 window.location.href = 'index.html';
             }
+        }
+
+        function regenerateCard() {
+            if (!currentItems || currentItems.length < 24) {
+                alert('No items available to regenerate card.');
+                return;
+            }
+            
+            // Clear the current card
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            
+            // Create a new card with reshuffled items
+            const newCard = createBingoCard(currentItems);
+            container.appendChild(newCard);
+            
+            // Scroll to top of card
+            container.scrollIntoView({ behavior: 'smooth' });
         }
 
         function saveCard() {
