@@ -461,25 +461,31 @@
             const card = document.createElement('div');
             card.className = 'bingo-card';
             
+            const grid = document.createElement('div');
+            grid.className = 'bingo-grid';
+            
             for (let i = 0; i < 25; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'bingo-cell';
                 
                 if (i === 12) {
                     cell.classList.add('free-space');
+                    const kissDiv = document.createElement('div');
+                    kissDiv.className = 'kiss-mark';
                     const img = document.createElement('img');
                     img.src = kissMarkDataURL;
                     img.alt = 'FREE';
-                    img.className = 'kiss-mark';
-                    cell.appendChild(img);
+                    kissDiv.appendChild(img);
+                    cell.appendChild(kissDiv);
                 } else {
                     const index = i < 12 ? i : i - 1;
                     cell.textContent = shuffled[index] || '';
                 }
                 
-                card.appendChild(cell);
+                grid.appendChild(cell);
             }
             
+            card.appendChild(grid);
             return card;
         }
 
